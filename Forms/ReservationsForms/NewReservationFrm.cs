@@ -15,6 +15,7 @@ namespace HotelsPro2.Forms
 {
     public partial class NewReservationFrm : Form
     {
+        // In this form the user will create new reservations
         public NewReservationFrm()
         {
             InitializeComponent();
@@ -74,20 +75,24 @@ namespace HotelsPro2.Forms
 
         private void NewReservationFrm_Load(object sender, EventArgs e)
         {
+            // This makes sure Check-out date will always be after Check-in, and the reservation will 
+            // have at least 1 day
             dtpCheckin.MinDate = DateTime.Now;
             dtpCheckout.MinDate = dtpCheckin.Value.AddDays(1);
         }
 
         private void btnSelectGuest_Click(object sender, EventArgs e)
         {
-            var form = new SelectGuestFrm(dtpCheckin.Value, dtpCheckout.Value, (short)nudApartments.Value, (short)nudKids.Value, (short)nudAdults.Value);
+            // Passes the parameters selected for the reservation to the "SelectGuestFrm", so when the user
+            // chooses the guest, this form will receive these parameters back.
+            var form = new SelectGuestFrm(dtpCheckin.Value.Date, dtpCheckout.Value.Date, (short)nudApartments.Value, (short)nudKids.Value, (short)nudAdults.Value);
             form.Show();
             this.Close();
         }
 
         private void btnAvailability_Click(object sender, EventArgs e)
         {
-            var form = new NewReservationFrm(dtpCheckin.Value, dtpCheckout.Value, (short)nudApartments.Value, (short)nudKids.Value, (short)nudAdults.Value);
+            var form = new NewReservationFrm(dtpCheckin.Value.Date, dtpCheckout.Value.Date, (short)nudApartments.Value, (short)nudKids.Value, (short)nudAdults.Value);
             form.Show();
             this.Close();
         }
@@ -105,8 +110,8 @@ namespace HotelsPro2.Forms
                 {
                     con.Open();
                     MySqlCommand cmd = new MySqlCommand("CheckForApartmentsAvailability", con);
-                    cmd.Parameters.Add("_checkin", MySqlDbType.Date).Value = dtpCheckin.Value;
-                    cmd.Parameters.Add("_checkout", MySqlDbType.Date).Value = dtpCheckout.Value;
+                    cmd.Parameters.Add("_checkin", MySqlDbType.Date).Value = dtpCheckin.Value.Date;
+                    cmd.Parameters.Add("_checkout", MySqlDbType.Date).Value = dtpCheckout.Value.Date;
                     cmd.CommandType = CommandType.StoredProcedure;
                     MySqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -181,8 +186,8 @@ namespace HotelsPro2.Forms
                 {
                     con.Open();
                     MySqlCommand cmd = new MySqlCommand("CheckForOccupiedCapacity", con);
-                    cmd.Parameters.Add("_checkin", MySqlDbType.Date).Value = dtpCheckin.Value;
-                    cmd.Parameters.Add("_checkout", MySqlDbType.Date).Value = dtpCheckout.Value;
+                    cmd.Parameters.Add("_checkin", MySqlDbType.Date).Value = dtpCheckin.Value.Date;
+                    cmd.Parameters.Add("_checkout", MySqlDbType.Date).Value = dtpCheckout.Value.Date;
                     cmd.CommandType = CommandType.StoredProcedure;
                     MySqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -260,8 +265,8 @@ namespace HotelsPro2.Forms
                                                     "(r.checkin >= @checkin AND r.checkin <= @checkout) " +
                                                     "));", con3))
                                                     {
-                                                        cmd3.Parameters.Add("@checkin", MySqlDbType.Date).Value = dtpCheckin.Value;
-                                                        cmd3.Parameters.Add("@checkout", MySqlDbType.Date).Value = dtpCheckout.Value;
+                                                        cmd3.Parameters.Add("@checkin", MySqlDbType.Date).Value = dtpCheckin.Value.Date;
+                                                        cmd3.Parameters.Add("@checkout", MySqlDbType.Date).Value = dtpCheckout.Value.Date;
                                                         cmd3.Parameters.Add("@id", MySqlDbType.Int32).Value = reader[0];
                                                         MySqlDataReader reader3 = cmd3.ExecuteReader();
                                                         while (reader3.Read())
@@ -275,8 +280,8 @@ namespace HotelsPro2.Forms
                                                                 con4.Open();
                                                                 using (MySqlCommand cmd4 = new MySqlCommand("GetTotalPriceForStay", con4))
                                                                 {
-                                                                    cmd4.Parameters.Add("_checkin", MySqlDbType.Int32).Value = ConvertDateToNumber(dtpCheckin.Value);
-                                                                    cmd4.Parameters.Add("_checkout", MySqlDbType.Int32).Value = ConvertDateToNumber(dtpCheckout.Value);
+                                                                    cmd4.Parameters.Add("_checkin", MySqlDbType.Int32).Value = ConvertDateToNumber(dtpCheckin.Value.Date);
+                                                                    cmd4.Parameters.Add("_checkout", MySqlDbType.Int32).Value = ConvertDateToNumber(dtpCheckout.Value.Date);
                                                                     cmd4.CommandType = CommandType.StoredProcedure;
                                                                     using (MySqlDataReader reader4 = cmd4.ExecuteReader())
                                                                     {
@@ -324,7 +329,7 @@ namespace HotelsPro2.Forms
         private void dtpCheckin_ValueChanged(object sender, EventArgs e)
         {
             dtpCheckout.MinDate = dtpCheckin.Value.AddDays(1);
-            UpdateDurationLabel(dtpCheckin.Value, dtpCheckout.Value);
+            UpdateDurationLabel(dtpCheckin.Value.Date, dtpCheckout.Value.Date);
         }
 
         private int ConvertDateToNumber(DateTime date)
@@ -428,7 +433,7 @@ namespace HotelsPro2.Forms
             {
                 decimal value = dgvGetValue();
                 int categoryId = dgvCategories_SelectionChanged(sender, e);
-                var form = new SelectRoomFrm(dtpCheckin.Value, dtpCheckout.Value, categoryId, (short)nudApartments.Value, (short)nudAdults.Value, (short)nudKids.Value, value);
+                var form = new SelectRoomFrm(dtpCheckin.Value.Date, dtpCheckout.Value.Date, categoryId, (short)nudApartments.Value, (short)nudAdults.Value, (short)nudKids.Value, value);
                 form.Show();
                 this.Close();
             }
@@ -503,7 +508,7 @@ namespace HotelsPro2.Forms
 
         private void dtpCheckout_ValueChanged(object sender, EventArgs e)
         {
-            UpdateDurationLabel(dtpCheckin.Value, dtpCheckout.Value);
+            UpdateDurationLabel(dtpCheckin.Value.Date, dtpCheckout.Value.Date);
         }
 
         private void DisableAllButtons()
@@ -617,8 +622,8 @@ namespace HotelsPro2.Forms
                     cmd.Parameters.Add("_kids", MySqlDbType.Int16).Value = nudKids.Value;
                     cmd.Parameters.Add("_duration", MySqlDbType.Int16).Value = (dtpCheckout.Value.Date - dtpCheckin.Value.Date).Days;
                     cmd.Parameters.Add("_main_guest_id", MySqlDbType.Int32).Value = int.Parse(txtGuestId.Text);
-                    cmd.Parameters.Add("_checkin", MySqlDbType.Date).Value = dtpCheckin.Value;
-                    cmd.Parameters.Add("_checkout", MySqlDbType.Date).Value = dtpCheckout.Value;
+                    cmd.Parameters.Add("_checkin", MySqlDbType.Date).Value = dtpCheckin.Value.Date;
+                    cmd.Parameters.Add("_checkout", MySqlDbType.Date).Value = dtpCheckout.Value.Date;
                     cmd.Parameters.Add("_moment_of_reservation", MySqlDbType.DateTime).Value = DateTime.Now;
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.ExecuteNonQuery();
