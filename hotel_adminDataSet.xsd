@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="hotel_adminDataSet" targetNamespace="http://tempuri.org/hotel_adminDataSet.xsd" xmlns:mstns="http://tempuri.org/hotel_adminDataSet.xsd" xmlns="http://tempuri.org/hotel_adminDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="hotel_adminConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="hotel_adminConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.HotelsPro2.Properties.Settings.GlobalReference.Default.hotel_adminConnectionString" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="apartment_categoriesTableAdapter" GeneratorDataComponentClassName="apartment_categoriesTableAdapter" Name="apartment_categories" UserDataComponentName="apartment_categoriesTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="hotel_adminConnectionString (Settings)" DbObjectName="hotel_admin.apartment_categories" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `title` FROM `apartment_categories`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="title" DataSetColumn="title" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="hotel_adminDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="hotel_adminDataSet" msprop:Generator_UserDSName="hotel_adminDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="apartment_categories" msprop:Generator_TableClassName="apartment_categoriesDataTable" msprop:Generator_TableVarName="tableapartment_categories" msprop:Generator_TablePropName="apartment_categories" msprop:Generator_RowDeletingName="apartment_categoriesRowDeleting" msprop:Generator_RowChangingName="apartment_categoriesRowChanging" msprop:Generator_RowEvHandlerName="apartment_categoriesRowChangeEventHandler" msprop:Generator_RowDeletedName="apartment_categoriesRowDeleted" msprop:Generator_UserTableName="apartment_categories" msprop:Generator_RowChangedName="apartment_categoriesRowChanged" msprop:Generator_RowEvArgName="apartment_categoriesRowChangeEvent" msprop:Generator_RowClassName="apartment_categoriesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="title" msprop:Generator_ColumnVarNameInTable="columntitle" msprop:Generator_ColumnPropNameInRow="title" msprop:Generator_ColumnPropNameInTable="titleColumn" msprop:Generator_UserColumnName="title">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
