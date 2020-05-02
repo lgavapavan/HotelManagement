@@ -6,7 +6,7 @@ namespace HotelsPro2.Entities
 {
     public class Reservation
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public byte Adults { get; set; }
         public byte Kids { get; set; }
         public DateTime Checkin { get; set; }
@@ -18,8 +18,9 @@ namespace HotelsPro2.Entities
         public DateTime MomentOfReservation { get; set; }
         public List<Apartment> Apartment { get; set; } // At least 1 apartment
 
-        public void DurationCalc()
+        public Reservation()
         {
+
         }
     }
 }

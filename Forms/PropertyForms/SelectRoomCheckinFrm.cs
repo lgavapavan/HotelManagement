@@ -1,5 +1,6 @@
 ﻿using HotelsPro2.Entities;
 using HotelsPro2.Entities.Enums;
+using HotelsPro2.Forms.ReservationsForms;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -16,29 +17,28 @@ namespace HotelsPro2.Forms
 {
     public partial class SelectRoomCheckinFrm : Form
     {
-        public DateTime Cin { get; set; }
-        public DateTime Cout { get; set; }
-        public short Apartments { get; set; }
-        public short Adult { get; set; }
-        public short Kids { get; set; }
-        public int CatId { get; set; }
-        public decimal Value { get; set; }
-        public SelectRoomCheckinFrm(DateTime checkin, DateTime checkout, int categoryId, short apartments, short adult, short kids, decimal value)
+        public int ReservationId { get; set; }
+        public List<int> ReservationApartmentId { get; set; }
+        public Apartment Apartment { get; set; }
+        public Guest Guest { get; set; }
+        public SelectRoomCheckinFrm()
         {
             InitializeComponent();
-            this.Cin = checkin;
-            this.Cout = checkout;
-            this.CatId = categoryId;
-            this.Apartments = apartments;
-            this.Adult = adult;
-            this.Kids = kids;
-            this.Value = value;
+        }
+        public SelectRoomCheckinFrm(int reservationId, List<int> reservationApartmentId, Guest guest)
+        {
+            InitializeComponent();
+            this.ReservationId = reservationId;
+            this.ReservationApartmentId = reservationApartmentId;
+            this.Guest = guest;
+            this.Apartment = null;
         }
 
         private void RoomManagementFrm_Load(object sender, EventArgs e)
         {
             dgvRooms.DataSource = GetApartmentList();
-            dgvRooms.Columns["apartment_id"].Visible = false;
+            dgvRooms.Columns["Apartment Id"].Visible = false;
+            dgvRooms.Columns["Reservation Apartment Id"].Visible = false;
             if (dgvRooms.Rows.Count == 0)
             {
                 btnSelect.Enabled = false;
@@ -53,66 +53,42 @@ namespace HotelsPro2.Forms
 
             using (MySqlConnection con = new MySqlConnection(connString))
             {
-                using (MySqlCommand cmd = new MySqlCommand("DisplayApartmentsFromCategory", con))
+                for (int i = 0; i <= this.ReservationApartmentId.Count-1; i++)
                 {
-                    cmd.Parameters.Add("_category", MySqlDbType.Int32).Value = this.CatId;
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-
-                    MySqlDataReader reader = cmd.ExecuteReader();
-
-                    dtAvailableApartments.Load(reader);
-
-                    con.Close();
-                }
-
-                using (MySqlCommand cmd = new MySqlCommand("RemoveReservedApartmentsFromDataTable", con))                
-                {
-                    cmd.Parameters.Add("_checkin", MySqlDbType.Date).Value = this.Cin;
-                    cmd.Parameters.Add("_checkout", MySqlDbType.Date).Value = this.Cout;
-                    cmd.Parameters.Add("_category", MySqlDbType.Int32).Value = this.CatId;
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    int count = 0;
+                    using (MySqlCommand cmd = new MySqlCommand("" +
+                        "SELECT COUNT(*) " +
+                        "FROM _guests_on_a_reservation " +
+                        "WHERE reservation_apartment_id = @reservation_apartment_id", con))
                     {
-                        while (reader.Read())
+                        cmd.Parameters.Add("@reservation_apartment_id", MySqlDbType.Int32).Value = this.ReservationApartmentId[i];
+                        con.Open();
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            for (int i = dtAvailableApartments.Rows.Count-1; i >= 0; i--)
+                            while (reader.Read())
                             {
-                                DataRow dr = dtAvailableApartments.Rows[i];
-                                if (int.Parse(dr["apartment_id"].ToString()) == int.Parse(reader[0].ToString()))
-                                {
-                                    dr.Delete();
-                                }
+                                count = int.Parse(reader[0].ToString());
                             }
-                            dtAvailableApartments.AcceptChanges();
                         }
-                    }
-                    con.Close();
-                }
-            }
-            if (Globals.apartments != null)
-            {
-                foreach (var item in Globals.apartments)
-                {
-                    for (int i = dtAvailableApartments.Rows.Count-1; i >= 0; i--)
-                    {
-                        DataRow dr = dtAvailableApartments.Rows[i];
-                        if (dr["apartment_id"].ToString() == item.Id.ToString())
+
+                        using (MySqlCommand cmd2 = new MySqlCommand("ShowApartmentsFromReservationStillAvailable",con))
                         {
-                            dr.Delete();
-                            for (int j = i; j < dtAvailableApartments.Rows.Count-1; j++)
+                            cmd2.Parameters.Add("_count", MySqlDbType.Int32).Value = count;
+                            cmd2.Parameters.Add("_reservation_apartment_id", MySqlDbType.Int32).Value = this.ReservationApartmentId[i];
+                            cmd2.CommandType = CommandType.StoredProcedure;
+
+                            using (MySqlDataReader reader2 = cmd2.ExecuteReader())
                             {
-                                DataRow dr2 = dtAvailableApartments.Rows[j];
-                                DataRow dr3 = dtAvailableApartments.Rows[j + 1];
-                                dr2 = dr3;
+                                dtAvailableApartments.Load(reader2);
                             }
-                            dtAvailableApartments.AcceptChanges();
                         }
+
+                        con.Close();
                     }
                 }
+
             }
-            dtAvailableApartments.AcceptChanges();
             return dtAvailableApartments;
         }
 
@@ -120,13 +96,12 @@ namespace HotelsPro2.Forms
         {
             DataGridViewRow row = (DataGridViewRow)dgvRooms.Rows[dgvRooms.SelectedCells[0].RowIndex];
             Apartment apartment = new Apartment();
-            apartment.Id = short.Parse(row.Cells[0].Value.ToString());
-            apartment.Number = short.Parse(row.Cells[1].Value.ToString());
-            apartment.Value = this.Value;
+            apartment.Id = short.Parse(row.Cells[1].Value.ToString());
+            apartment.Number = short.Parse(row.Cells[2].Value.ToString());
             ApartmentCategory apartmentCategory = new ApartmentCategory();
-            apartmentCategory.Title = row.Cells[2].Value.ToString();
+            apartmentCategory.Title = row.Cells[3].Value.ToString();
             apartment.ApartmentCategory = apartmentCategory;
-            Globals.apartments.Add(apartment);
+            this.Apartment = apartment;
             this.Close();
         }
 
@@ -147,8 +122,16 @@ namespace HotelsPro2.Forms
 
         private void SelectRoomFrm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            var form = new NewReservationFrm(this.Cin, this.Cout, this.Apartments, this.Kids, this.Adult);
-            form.Show();
+            if (this.Apartment != null)
+            {
+                var form = new CheckinFrm(this.ReservationId, this.Guest, this.Apartment, this.ReservationApartmentId);
+                form.Show();
+            }
+            else
+            {
+                var form = new CheckinFrm(this.ReservationId, this.Guest, this.ReservationApartmentId);
+                form.Show();
+            }
         }
     }
 }

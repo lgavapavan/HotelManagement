@@ -111,8 +111,8 @@ namespace HotelsPro2.Forms
 
         private void btnViewDetails_Click(object sender, EventArgs e)
         {
-            var form = new ReservationInfoFrm();
             Globals.reservationId = dgvReservations_SelectionChanged(sender, e);
+            var form = new ReservationInfoFrm();
             form.Show();
             this.Close();
         }

@@ -19,6 +19,7 @@ namespace HotelsPro2.Forms.ReservationsForms
         // and assign each of them to their specific rooms.
 
         public int ReservationId { get; set; }
+        public List<int> ReservationApartmentId { get; set; }
         public Guest Guest { get; set; }
         public Apartment Apartment { get; set; }
         public CheckinFrm()
@@ -26,27 +27,34 @@ namespace HotelsPro2.Forms.ReservationsForms
             InitializeComponent();
         }
 
-        public CheckinFrm(int reservationId)
+        public CheckinFrm(int reservationId, List<int> reservationApartmentId)
         {
             InitializeComponent();
             this.ReservationId = reservationId;
+            this.ReservationApartmentId = reservationApartmentId;
         }
 
-        public CheckinFrm(int reservationId, Guest guest)
+        public CheckinFrm(int reservationId, Guest guest, List<int> reservationApartmentId)
         {
             InitializeComponent();
             this.ReservationId = reservationId;
             this.Guest = guest;
             txtGuestName.Text = guest.FirstName + " " + guest.LastName;
+            this.ReservationApartmentId = reservationApartmentId;
+            btnSelectApartment.Enabled = true;
         }
 
-        public CheckinFrm(int reservationId, Guest guest, Apartment apartment)
+        public CheckinFrm(int reservationId, Guest guest, Apartment apartment, List<int> reservationApartmentId)
         {
             InitializeComponent();
             this.ReservationId = reservationId;
             this.Guest = guest;
             txtGuestName.Text = guest.FirstName + " " + guest.LastName;
-
+            this.ReservationApartmentId = reservationApartmentId;
+            this.Apartment = apartment;
+            txtApartmentNumber.Text = apartment.Number.ToString();
+            btnSelectApartment.Enabled = true;
+            btnSave.Enabled = true;
         }
         private void CheckinFrm_Load(object sender, EventArgs e)
         {
@@ -55,7 +63,7 @@ namespace HotelsPro2.Forms.ReservationsForms
 
         private void btnSelectGuest_Click(object sender, EventArgs e)
         {
-            var form = new SelectGuestCheckinFrm(this.ReservationId);
+            var form = new SelectGuestCheckinFrm(this.ReservationId, this.ReservationApartmentId);
             form.Show();
             this.Close();
         }
@@ -91,7 +99,9 @@ namespace HotelsPro2.Forms.ReservationsForms
 
         private void btnSelectApartment_Click(object sender, EventArgs e)
         {
-            //var form = new SelectRoomCheckinFrm()
+            var form = new SelectRoomCheckinFrm(this.ReservationId, this.ReservationApartmentId, this.Guest);
+            form.Show();
+            this.Close();
         }
     }
 }

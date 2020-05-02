@@ -17,22 +17,32 @@ namespace HotelsPro2.Forms
     public partial class ReservationInfoFrm : Form
     {
         // This form displays all relevant information for a specific reservation
-        public int ReservationId { get; set; }
+        public List<int> ReservationApartmentId { get; set; }
+        public Reservation Reservation { get; set; }
         public ReservationInfoFrm()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            this.Reservation = new Reservation();
+
         }
 
         private void ReservationInfoFrm_Load(object sender, EventArgs e)
         {
             // Globals.reservationId is set when the user selected the reservation in the previous form.
-            this.ReservationId = Globals.reservationId;
+            this.Reservation.Id = Globals.reservationId;
 
             dgvGuests.DataSource = GetGuestsFromReservation();
             dgvGuests.Columns["guest_id"].Visible = false;
             dgvApartments.DataSource = GetApartmentsFromReservation();
+            dgvApartments.Columns["Reservation Apartment Id"].Visible = false;
+            dgvApartments.Columns["Apartment Id"].Visible = false;
             dgvProductsAndServices.DataSource = GetProductsFromReservation();
             GetReservationInfo();
+            if (dgvGuests.Rows.Count<(this.Reservation.Adults+this.Reservation.Kids))
+            {
+                btnAddGuest.Enabled = true;
+            }
+            
 
         }
 
@@ -51,12 +61,21 @@ namespace HotelsPro2.Forms
 
             while (reader.Read())
             {
-                dtpCheckin.Value = DateTime.Parse(reader["checkin"].ToString());
-                dtpCheckout.Value = DateTime.Parse(reader["checkout"].ToString());
-                lblAdults.Text = $"Adults: {reader["adults"]}";
-                lblKids.Text = $"Kids: {reader["kids"]}";
-                lblDuration.Text = $"Duration: {reader["duration"]} days";
-                dtpMomentOfReservation.Value = DateTime.Parse(reader["moment_of_reservation"].ToString());
+                Reservation reservation = new Reservation();
+                reservation.Id = this.Reservation.Id;
+                reservation.Checkin = DateTime.Parse(reader["checkin"].ToString());
+                dtpCheckin.Value = reservation.Checkin;
+                reservation.Checkout = DateTime.Parse(reader["checkout"].ToString());
+                dtpCheckout.Value = reservation.Checkout;
+                reservation.Adults = byte.Parse(reader["adults"].ToString());
+                lblAdults.Text = $"Adults: {reservation.Adults}";
+                reservation.Kids = byte.Parse(reader["kids"].ToString());
+                lblKids.Text = $"Kids: {reservation.Kids}";
+                reservation.Duration = short.Parse(reader["duration"].ToString());
+                lblDuration.Text = $"Duration: {reservation.Duration} days";
+                reservation.MomentOfReservation = DateTime.Parse(reader["moment_of_reservation"].ToString());
+                dtpMomentOfReservation.Value = reservation.MomentOfReservation;
+                this.Reservation = reservation;
             }
 
             // Calculating sum of consumed products:
@@ -165,8 +184,23 @@ namespace HotelsPro2.Forms
 
         private void btnCheckin_Click(object sender, EventArgs e)
         {
-            var form = new CheckinFrm(this.ReservationId);
+            if (this.ReservationApartmentId != null)
+                this.ReservationApartmentId.Clear();
+            List<int> a = new List<int>();
+            for (int i = 0; i <= dgvApartments.Rows.Count-1; i++)
+            {
+                a.Add(int.Parse(dgvApartments.Rows[i].Cells["Reservation Apartment Id"].Value.ToString()));
+            }
+            this.ReservationApartmentId = a;
+            var form = new CheckinFrm(this.Reservation.Id, this.ReservationApartmentId);
             form.Show();
+        }
+
+        private void btnAddGuest_Click(object sender, EventArgs e)
+        {
+            var form = new AddGuestToReservationFrm(this.Reservation.Id);
+            form.Show();
+            this.Close();
         }
     }
 }

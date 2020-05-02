@@ -111,6 +111,7 @@
             // 
             // btnSave
             // 
+            this.btnSave.Enabled = false;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.btnSave.Location = new System.Drawing.Point(352, 336);
             this.btnSave.Name = "btnSave";
@@ -172,6 +173,7 @@
             // 
             // btnSaveChanges
             // 
+            this.btnSaveChanges.Enabled = false;
             this.btnSaveChanges.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.btnSaveChanges.Location = new System.Drawing.Point(407, 414);
             this.btnSaveChanges.Name = "btnSaveChanges";
@@ -201,6 +203,7 @@
             // 
             // btnSelectApartment
             // 
+            this.btnSelectApartment.Enabled = false;
             this.btnSelectApartment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.btnSelectApartment.Location = new System.Drawing.Point(570, 117);
             this.btnSelectApartment.Name = "btnSelectApartment";

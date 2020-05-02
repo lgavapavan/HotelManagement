@@ -1,5 +1,4 @@
 ﻿using HotelsPro2.Entities;
-using HotelsPro2.Forms.ReservationsForms;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -14,21 +13,22 @@ using System.Windows.Forms;
 
 namespace HotelsPro2.Forms
 {
-    public partial class SelectGuestCheckinFrm : Form
+    public partial class AddGuestToReservationFrm : Form
     {
-        public DateTime Cin { get; set; }
-        public DateTime Cout { get; set; }
-        public short Apartments { get; set; }
-        public short Adult { get; set; }
-        public short Kids { get; set; }
+        public Reservation Reservation { get; set; }
         public Guest Guest { get; set; }
-        public int ReservationId { get; set; }
-        public List<int> ReservationApartmentId { get; set; }
-        public SelectGuestCheckinFrm(int reservationId, List<int> reservationApartmentId)
+        public AddGuestToReservationFrm(int reservationId)
         {
             InitializeComponent();
-            this.ReservationId = reservationId;
-            this.ReservationApartmentId = reservationApartmentId;
+            this.Reservation = new Reservation();
+            this.Reservation.Id = reservationId;
+        }
+        private void SelectGuestFrm_Load(object sender, EventArgs e)
+        {
+            dgvGuests.DataSource = GetGuestsList();
+            dgvGuests.Columns["guest_id"].Visible = false;
+            dgvGuests.Columns["Name"].Visible = false;
+            dgvGuests.Columns["Last Name"].Visible = false;
         }
 
         private void btnSearchGuest_Click(object sender, EventArgs e)
@@ -36,9 +36,8 @@ namespace HotelsPro2.Forms
             dgvGuests.DataSource = null;
             dgvGuests.Refresh();
             dgvGuests.DataSource = SearchGuest();
-            dgvGuests.Columns["guest_id"].Visible = false;
-            dgvGuests.Columns["Name"].Visible = false;
-            dgvGuests.Columns["Last Name"].Visible = false;
+            dgvGuests.Columns["first_name"].Visible = false;
+            dgvGuests.Columns["last_name"].Visible = false;
         }
 
         private DataTable SearchGuest()
@@ -57,13 +56,6 @@ namespace HotelsPro2.Forms
             return dtGuestSearched;
         }
 
-        private void SelectGuestFrm_Load(object sender, EventArgs e)
-        {
-            dgvGuests.DataSource = GetGuestsList();
-            dgvGuests.Columns["guest_id"].Visible = false;
-            dgvGuests.Columns["Name"].Visible = false;
-            dgvGuests.Columns["Last Name"].Visible = false;
-        }
 
         private DataTable GetGuestsList()
         {
@@ -84,7 +76,6 @@ namespace HotelsPro2.Forms
                     con.Close();
                 }
             }
-
             return dtGuests;
         }
 
@@ -109,14 +100,25 @@ namespace HotelsPro2.Forms
                 guest.Email = row.Cells["Email"].Value.ToString();
                 this.Guest = guest;
             }
+
+            MySqlConnection con = new MySqlConnection(Globals.connString);
+            using (MySqlCommand cmd = new MySqlCommand("INSERT INTO _reservation_guest(guest_id, reservation_id) " +
+                "VALUES(@guestId, @reservationId)", con))
+            {
+                cmd.Parameters.Add("@guestId", MySqlDbType.Int32).Value = this.Guest.Id;
+                cmd.Parameters.Add("@reservationId", MySqlDbType.Int32).Value = this.Reservation.Id;                
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            MessageBox.Show("Guest added to reservation");
             this.Close();
-            var form = new CheckinFrm(this.ReservationId, this.Guest, this.ReservationApartmentId);
-            form.Show();
         }
 
         private void SelectGuestFrm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+            var form = new ReservationInfoFrm();
+            form.Show();
         }
     }
 }

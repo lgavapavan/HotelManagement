@@ -61,6 +61,7 @@
             this.btnHousekeeper = new System.Windows.Forms.Button();
             this.btnCheckin = new System.Windows.Forms.Button();
             this.btnCheckout = new System.Windows.Forms.Button();
+            this.btnAddGuest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGuests)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApartments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductsAndServices)).BeginInit();
@@ -383,12 +384,25 @@
             this.btnCheckout.Text = "Check-Out";
             this.btnCheckout.UseVisualStyleBackColor = true;
             // 
+            // btnAddGuest
+            // 
+            this.btnAddGuest.Enabled = false;
+            this.btnAddGuest.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.btnAddGuest.Location = new System.Drawing.Point(554, 227);
+            this.btnAddGuest.Name = "btnAddGuest";
+            this.btnAddGuest.Size = new System.Drawing.Size(195, 34);
+            this.btnAddGuest.TabIndex = 93;
+            this.btnAddGuest.Text = "Add Guest";
+            this.btnAddGuest.UseVisualStyleBackColor = true;
+            this.btnAddGuest.Click += new System.EventHandler(this.btnAddGuest_Click);
+            // 
             // ReservationInfoFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1322, 665);
+            this.Controls.Add(this.btnAddGuest);
             this.Controls.Add(this.btnCheckout);
             this.Controls.Add(this.btnCheckin);
             this.Controls.Add(this.btnHousekeeper);
@@ -453,5 +467,6 @@
         private System.Windows.Forms.Button btnHousekeeper;
         private System.Windows.Forms.Button btnCheckin;
         private System.Windows.Forms.Button btnCheckout;
+        private System.Windows.Forms.Button btnAddGuest;
     }
 }

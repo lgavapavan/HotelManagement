@@ -35,3 +35,4 @@ C:\Users\lucas\source\repos\HotelsPro2\HotelsPro2\obj\Debug\HotelsPro2.Forms.Res
 C:\Users\lucas\source\repos\HotelsPro2\HotelsPro2\obj\Debug\HotelsPro2.Forms.CheckoutsTodayFrm.resources
 C:\Users\lucas\source\repos\HotelsPro2\HotelsPro2\obj\Debug\HotelsPro2.Forms.CheckinsTodayFrm.resources
 C:\Users\lucas\source\repos\HotelsPro2\HotelsPro2\obj\Debug\HotelsPro2.Forms.SelectRoomCheckinFrm.resources
+C:\Users\lucas\source\repos\HotelsPro2\HotelsPro2\obj\Debug\HotelsPro2.Forms.AddGuestToReservationFrm.resources
