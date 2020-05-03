@@ -62,6 +62,7 @@
             this.btnCheckin = new System.Windows.Forms.Button();
             this.btnCheckout = new System.Windows.Forms.Button();
             this.btnAddGuest = new System.Windows.Forms.Button();
+            this.btnRemoveGuest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGuests)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApartments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductsAndServices)).BeginInit();
@@ -396,12 +397,24 @@
             this.btnAddGuest.UseVisualStyleBackColor = true;
             this.btnAddGuest.Click += new System.EventHandler(this.btnAddGuest_Click);
             // 
+            // btnRemoveGuest
+            // 
+            this.btnRemoveGuest.Enabled = false;
+            this.btnRemoveGuest.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.btnRemoveGuest.Location = new System.Drawing.Point(755, 227);
+            this.btnRemoveGuest.Name = "btnRemoveGuest";
+            this.btnRemoveGuest.Size = new System.Drawing.Size(195, 34);
+            this.btnRemoveGuest.TabIndex = 94;
+            this.btnRemoveGuest.Text = "Remove Guest";
+            this.btnRemoveGuest.UseVisualStyleBackColor = true;
+            // 
             // ReservationInfoFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1322, 665);
+            this.Controls.Add(this.btnRemoveGuest);
             this.Controls.Add(this.btnAddGuest);
             this.Controls.Add(this.btnCheckout);
             this.Controls.Add(this.btnCheckin);
@@ -468,5 +481,6 @@
         private System.Windows.Forms.Button btnCheckin;
         private System.Windows.Forms.Button btnCheckout;
         private System.Windows.Forms.Button btnAddGuest;
+        private System.Windows.Forms.Button btnRemoveGuest;
     }
 }

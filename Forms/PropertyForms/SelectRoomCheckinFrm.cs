@@ -48,7 +48,8 @@ namespace HotelsPro2.Forms
         private DataTable GetApartmentList()
         {
             DataTable dtAvailableApartments = new DataTable();
-
+            DataTable dt = new DataTable();
+            
             string connString = ConfigurationManager.ConnectionStrings["dbx"].ConnectionString;
 
             using (MySqlConnection con = new MySqlConnection(connString))
@@ -72,6 +73,7 @@ namespace HotelsPro2.Forms
                             }
                         }
 
+                        // SÓ ESTÁ ADICIONANDO O PRIMEIRO APARTAMENTO DA RESERVA. PROBLEMA PODE SER USAR .LOAD
                         using (MySqlCommand cmd2 = new MySqlCommand("ShowApartmentsFromReservationStillAvailable",con))
                         {
                             cmd2.Parameters.Add("_count", MySqlDbType.Int32).Value = count;
@@ -83,7 +85,7 @@ namespace HotelsPro2.Forms
                                 dtAvailableApartments.Load(reader2);
                             }
                         }
-
+                        dt.Merge(dtAvailableApartments);
                         con.Close();
                     }
                 }
@@ -96,7 +98,7 @@ namespace HotelsPro2.Forms
         {
             DataGridViewRow row = (DataGridViewRow)dgvRooms.Rows[dgvRooms.SelectedCells[0].RowIndex];
             Apartment apartment = new Apartment();
-            apartment.Id = short.Parse(row.Cells[1].Value.ToString());
+            apartment.Id = short.Parse(row.Cells[0].Value.ToString()); //gets the reservation_apartment_id
             apartment.Number = short.Parse(row.Cells[2].Value.ToString());
             ApartmentCategory apartmentCategory = new ApartmentCategory();
             apartmentCategory.Title = row.Cells[3].Value.ToString();

@@ -38,9 +38,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btnSaveChanges = new System.Windows.Forms.Button();
             this.txtApartmentNumber = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnSelectApartment = new System.Windows.Forms.Button();
@@ -64,11 +61,12 @@
             this.txtGuestName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.5F);
             this.txtGuestName.Location = new System.Drawing.Point(23, 340);
             this.txtGuestName.Name = "txtGuestName";
-            this.txtGuestName.Size = new System.Drawing.Size(196, 31);
+            this.txtGuestName.Size = new System.Drawing.Size(276, 31);
             this.txtGuestName.TabIndex = 93;
             // 
             // dgvGuests
             // 
+            this.dgvGuests.AllowUserToAddRows = false;
             this.dgvGuests.AllowUserToDeleteRows = false;
             this.dgvGuests.AllowUserToResizeColumns = false;
             this.dgvGuests.AllowUserToResizeRows = false;
@@ -113,7 +111,7 @@
             // 
             this.btnSave.Enabled = false;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.btnSave.Location = new System.Drawing.Point(352, 336);
+            this.btnSave.Location = new System.Drawing.Point(432, 336);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(121, 37);
             this.btnSave.TabIndex = 98;
@@ -135,7 +133,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 13.25F);
-            this.label1.Location = new System.Drawing.Point(226, 314);
+            this.label1.Location = new System.Drawing.Point(306, 314);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 23);
             this.label1.TabIndex = 99;
@@ -151,42 +149,11 @@
             this.label2.TabIndex = 100;
             this.label2.Text = "Guest already registered?";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Tai Le", 13.25F);
-            this.label4.Location = new System.Drawing.Point(282, 91);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(208, 23);
-            this.label4.TabIndex = 102;
-            this.label4.Text = "Guest not registered yet?";
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.button2.Location = new System.Drawing.Point(286, 117);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(121, 37);
-            this.button2.TabIndex = 101;
-            this.button2.Text = "New Guest";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // btnSaveChanges
-            // 
-            this.btnSaveChanges.Enabled = false;
-            this.btnSaveChanges.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.btnSaveChanges.Location = new System.Drawing.Point(407, 414);
-            this.btnSaveChanges.Name = "btnSaveChanges";
-            this.btnSaveChanges.Size = new System.Drawing.Size(208, 37);
-            this.btnSaveChanges.TabIndex = 103;
-            this.btnSaveChanges.Text = "Save Changes";
-            this.btnSaveChanges.UseVisualStyleBackColor = true;
-            // 
             // txtApartmentNumber
             // 
             this.txtApartmentNumber.Enabled = false;
             this.txtApartmentNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.5F);
-            this.txtApartmentNumber.Location = new System.Drawing.Point(225, 340);
+            this.txtApartmentNumber.Location = new System.Drawing.Point(305, 340);
             this.txtApartmentNumber.Name = "txtApartmentNumber";
             this.txtApartmentNumber.Size = new System.Drawing.Size(121, 31);
             this.txtApartmentNumber.TabIndex = 104;
@@ -195,7 +162,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Tai Le", 13.25F);
-            this.label5.Location = new System.Drawing.Point(566, 91);
+            this.label5.Location = new System.Drawing.Point(255, 91);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(291, 23);
             this.label5.TabIndex = 106;
@@ -205,7 +172,7 @@
             // 
             this.btnSelectApartment.Enabled = false;
             this.btnSelectApartment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.btnSelectApartment.Location = new System.Drawing.Point(570, 117);
+            this.btnSelectApartment.Location = new System.Drawing.Point(259, 117);
             this.btnSelectApartment.Name = "btnSelectApartment";
             this.btnSelectApartment.Size = new System.Drawing.Size(156, 37);
             this.btnSelectApartment.TabIndex = 105;
@@ -218,13 +185,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1001, 463);
+            this.ClientSize = new System.Drawing.Size(1001, 397);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnSelectApartment);
             this.Controls.Add(this.txtApartmentNumber);
-            this.Controls.Add(this.btnSaveChanges);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSave);
@@ -253,9 +217,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button btnSaveChanges;
         private System.Windows.Forms.TextBox txtApartmentNumber;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnSelectApartment;

@@ -22,6 +22,7 @@ namespace HotelsPro2.Forms.ReservationsForms
         public List<int> ReservationApartmentId { get; set; }
         public Guest Guest { get; set; }
         public Apartment Apartment { get; set; }
+        public List<int> GuestsIds { get; set; }
         public CheckinFrm()
         {
             InitializeComponent();
@@ -59,11 +60,13 @@ namespace HotelsPro2.Forms.ReservationsForms
         private void CheckinFrm_Load(object sender, EventArgs e)
         {
             dgvGuests.DataSource = GetGuestsInEachApartment();
+            dgvGuests.Columns["guest_id"].Visible = false;
+            UpdateGuestList();
         }
 
         private void btnSelectGuest_Click(object sender, EventArgs e)
         {
-            var form = new SelectGuestCheckinFrm(this.ReservationId, this.ReservationApartmentId);
+            var form = new SelectGuestCheckinFrm(this.ReservationId, this.ReservationApartmentId, this.GuestsIds);
             form.Show();
             this.Close();
         }
@@ -92,9 +95,18 @@ namespace HotelsPro2.Forms.ReservationsForms
             MySqlConnection con = new MySqlConnection(Globals.connString);
             using (MySqlCommand cmd = new MySqlCommand("SaveGuestInARoom", con))
             {
-                //PAREI AQUI
-                //cmd.Parameters.Add("_reservation_apartment_id",MySqlDbType.Int32).Value = this.Apartment.Number 
+                con.Open();
+                cmd.Parameters.Add("_guest_id", MySqlDbType.Int32).Value = this.Guest.Id;
+                cmd.Parameters.Add("_reservation_apartment_id", MySqlDbType.Int32).Value = this.Apartment.Id; //here it's actually getting the reservation apartment
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.ExecuteNonQuery();
+                MessageBox.Show($"Added {this.Guest.FirstName} to apartment number {this.Apartment.Number} successfully!");
+                con.Close();
             }
+            dgvGuests.DataSource = null;
+            dgvGuests.Refresh();
+            dgvGuests.DataSource = GetGuestsInEachApartment();
+            UpdateGuestList();
         }
 
         private void btnSelectApartment_Click(object sender, EventArgs e)
@@ -102,6 +114,16 @@ namespace HotelsPro2.Forms.ReservationsForms
             var form = new SelectRoomCheckinFrm(this.ReservationId, this.ReservationApartmentId, this.Guest);
             form.Show();
             this.Close();
+        }
+
+        private void UpdateGuestList()
+        {
+            this.GuestsIds = new List<int>(); 
+            this.GuestsIds.Clear();
+            for (int i = 0; i <= dgvGuests.Rows.Count-1; i++)
+            {
+                this.GuestsIds.Add(int.Parse(dgvGuests.Rows[i].Cells["guest_id"].Value.ToString()));
+            }
         }
     }
 }

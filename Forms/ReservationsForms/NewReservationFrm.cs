@@ -675,6 +675,14 @@ namespace HotelsPro2.Forms
                         cmd2.CommandType = CommandType.StoredProcedure;
                         cmd2.ExecuteNonQuery();                        
                     }
+
+                    using (MySqlCommand cmd2 = new MySqlCommand("INSERT INTO _reservation_guest(guest_id, reservation_id) " +
+                        "VALUES(@guest_id, @reservation_id)", con))
+                    {
+                        cmd2.Parameters.Add("@guest_id", MySqlDbType.Int32).Value = int.Parse(txtGuestId.Text);
+                        cmd2.Parameters.Add("@reservation_id", MySqlDbType.Int32).Value = reservationApartmentId;
+                        cmd2.ExecuteNonQuery();
+                    }
                     con.Close();
                 }
                 MessageBox.Show("Reservation saved successfully");

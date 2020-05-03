@@ -16,19 +16,29 @@ namespace HotelsPro2.Forms
 {
     public partial class SelectGuestCheckinFrm : Form
     {
-        public DateTime Cin { get; set; }
-        public DateTime Cout { get; set; }
-        public short Apartments { get; set; }
-        public short Adult { get; set; }
-        public short Kids { get; set; }
         public Guest Guest { get; set; }
         public int ReservationId { get; set; }
         public List<int> ReservationApartmentId { get; set; }
-        public SelectGuestCheckinFrm(int reservationId, List<int> reservationApartmentId)
+        public List<int> GuestsIds { get; set; }
+        public SelectGuestCheckinFrm(int reservationId, List<int> reservationApartmentId, List<int> guests)
         {
             InitializeComponent();
             this.ReservationId = reservationId;
             this.ReservationApartmentId = reservationApartmentId;
+            this.GuestsIds = guests;
+        }
+        private void SelectGuestFrm_Load(object sender, EventArgs e)
+        {
+            dgvGuests.DataSource = GetGuestsFromReservation();
+            RemoveGuestsThatAlreadyHaveAnApartment();
+            dgvGuests.Columns["guest_id"].Visible = false;
+            dgvGuests.Columns["First Name"].Visible = false;
+            dgvGuests.Columns["Last Name"].Visible = false;
+            if (dgvGuests.Rows.Count == 0)
+            {
+                btnSelectGuest.Enabled = false;
+                btnSearchGuest.Enabled = false;
+            }
         }
 
         private void btnSearchGuest_Click(object sender, EventArgs e)
@@ -36,8 +46,9 @@ namespace HotelsPro2.Forms
             dgvGuests.DataSource = null;
             dgvGuests.Refresh();
             dgvGuests.DataSource = SearchGuest();
+            RemoveGuestsThatAlreadyHaveAnApartment();
             dgvGuests.Columns["guest_id"].Visible = false;
-            dgvGuests.Columns["Name"].Visible = false;
+            dgvGuests.Columns["First Name"].Visible = false;
             dgvGuests.Columns["Last Name"].Visible = false;
         }
 
@@ -57,33 +68,25 @@ namespace HotelsPro2.Forms
             return dtGuestSearched;
         }
 
-        private void SelectGuestFrm_Load(object sender, EventArgs e)
-        {
-            dgvGuests.DataSource = GetGuestsList();
-            dgvGuests.Columns["guest_id"].Visible = false;
-            dgvGuests.Columns["Name"].Visible = false;
-            dgvGuests.Columns["Last Name"].Visible = false;
-        }
-
-        private DataTable GetGuestsList()
+        private DataTable GetGuestsFromReservation()
         {
             DataTable dtGuests = new DataTable();
 
             string connString = ConfigurationManager.ConnectionStrings["dbx"].ConnectionString;
 
-            using (MySqlConnection con = new MySqlConnection(connString))
-            {
-                using (MySqlCommand cmd = new MySqlCommand("DisplayGuests", con))
-                {
-                    con.Open();
+            MySqlConnection con = new MySqlConnection(connString);
 
-                    MySqlDataReader reader = cmd.ExecuteReader();
+            con.Open();
 
-                    dtGuests.Load(reader);
+            MySqlCommand cmd = new MySqlCommand("ShowGuestsFromReservation", con);
+            cmd.Parameters.Add("_reservation_id", MySqlDbType.Int32).Value = Globals.reservationId;
+            cmd.CommandType = CommandType.StoredProcedure;
 
-                    con.Close();
-                }
-            }
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            dtGuests.Load(reader);
+
+            con.Close();
 
             return dtGuests;
         }
@@ -95,7 +98,7 @@ namespace HotelsPro2.Forms
             {
                 Guest guest = new NationalGuest();
                 guest.Id = int.Parse(row.Cells["guest_id"].Value.ToString());
-                guest.FirstName = row.Cells["Name"].Value.ToString();
+                guest.FirstName = row.Cells["First Name"].Value.ToString();
                 guest.LastName = row.Cells["Last Name"].Value.ToString();
                 guest.Email = row.Cells["Email"].Value.ToString();
                 this.Guest = guest;
@@ -103,8 +106,8 @@ namespace HotelsPro2.Forms
             else
             {
                 Guest guest = new InternationalGuest();
-                guest.Id = int.Parse(row.Cells[0].Value.ToString());
-                guest.FirstName = row.Cells["Name"].Value.ToString();
+                guest.Id = int.Parse(row.Cells["guest_id"].Value.ToString());
+                guest.FirstName = row.Cells["First Name"].Value.ToString();
                 guest.LastName = row.Cells["Last Name"].Value.ToString();
                 guest.Email = row.Cells["Email"].Value.ToString();
                 this.Guest = guest;
@@ -112,6 +115,20 @@ namespace HotelsPro2.Forms
             this.Close();
             var form = new CheckinFrm(this.ReservationId, this.Guest, this.ReservationApartmentId);
             form.Show();
+        }
+
+        private void RemoveGuestsThatAlreadyHaveAnApartment()
+        {
+            for (int i = 0; i <= dgvGuests.Rows.Count-1; i++)
+            {
+                for (int j = 0; j <= this.GuestsIds.Count-1; j++)
+                {
+                    if (int.Parse(dgvGuests.Rows[i].Cells["guest_id"].Value.ToString()) == this.GuestsIds[j])
+                    {
+                        dgvGuests.Rows.RemoveAt(i);
+                    }
+                }
+            }
         }
 
         private void SelectGuestFrm_FormClosed(object sender, FormClosedEventArgs e)

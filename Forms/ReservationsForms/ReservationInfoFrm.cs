@@ -33,6 +33,8 @@ namespace HotelsPro2.Forms
 
             dgvGuests.DataSource = GetGuestsFromReservation();
             dgvGuests.Columns["guest_id"].Visible = false;
+            dgvGuests.Columns["First Name"].Visible = false;
+            dgvGuests.Columns["Last Name"].Visible = false;
             dgvApartments.DataSource = GetApartmentsFromReservation();
             dgvApartments.Columns["Reservation Apartment Id"].Visible = false;
             dgvApartments.Columns["Apartment Id"].Visible = false;

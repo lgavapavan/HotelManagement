@@ -36,8 +36,8 @@ namespace HotelsPro2.Forms
             dgvGuests.DataSource = null;
             dgvGuests.Refresh();
             dgvGuests.DataSource = SearchGuest();
-            dgvGuests.Columns["first_name"].Visible = false;
-            dgvGuests.Columns["last_name"].Visible = false;
+            dgvGuests.Columns["Name"].Visible = false;
+            dgvGuests.Columns["Last Name"].Visible = false;
         }
 
         private DataTable SearchGuest()
