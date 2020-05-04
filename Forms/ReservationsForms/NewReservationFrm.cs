@@ -15,6 +15,7 @@ namespace HotelsPro2.Forms
 {
     public partial class NewReservationFrm : Form
     {
+        public int RoomsCapacity { get; set; }
         // In this form the user will create new reservations
         public NewReservationFrm()
         {
@@ -27,7 +28,7 @@ namespace HotelsPro2.Forms
         {
             InitializeComponent();
             FormShrink();
-            LoadReservationInfo(cin, cout, apartments, kids, adults);
+            LoadReservationInfo(cin.Date, cout.Date, apartments, kids, adults);
             
             if (CheckAvailability())
             {
@@ -50,7 +51,7 @@ namespace HotelsPro2.Forms
         {
             InitializeComponent();
             FormShrink();
-            LoadReservationInfo(cin, cout, apartments, kids, adults);
+            LoadReservationInfo(cin.Date, cout.Date, apartments, kids, adults);
 
             if (CheckAvailability())
             {
@@ -469,14 +470,14 @@ namespace HotelsPro2.Forms
         private void NotAvailable()
         {
             lblAvailability.Visible = true;
-            lblAvailability.Text = "There are no apartments available for these dates";
+            lblAvailability.Text = "Not enough apartments available for these dates";
             lblAvailability.ForeColor = Color.Red;
         }
 
         private void NoRoomAvailable()
         {
             lblAvailability.Visible = true;
-            lblAvailability.Text = "No room available for this amount of guests";
+            lblAvailability.Text = "No room available for this amount of guests for the selected dates";
             lblAvailability.ForeColor = Color.Red;
         }
 
@@ -487,7 +488,7 @@ namespace HotelsPro2.Forms
             lblAvailability.ForeColor = Color.Green;
         }
 
-        private void btnChangeDates_Click(object sender, EventArgs e)
+        private void btnChangeReservation_Click(object sender, EventArgs e)
         {
             EnableAllButtons();
             FormShrink();
@@ -576,14 +577,27 @@ namespace HotelsPro2.Forms
             lblCategoriesToChoose.Text = (nudApartments.Value - Globals.apartments.Count()).ToString();
             if (nudApartments.Value - Globals.apartments.Count() == 0)
             {
-                btnSelectGuest.Enabled = true;
-                btnNewGuest.Enabled = true;
+                byte sum = 0;
+                for (int i = 0; i <= Globals.apartments.Count-1; i++)
+                {
+                    sum += Globals.apartments[i].ApartmentCategory.RoomCapacity;
+                }
+                if (sum < (nudAdults.Value + nudKids.Value))
+                {
+                    lblRoomsCapacity.Visible = true;
+                }
+                else
+                {
+                    lblRoomsCapacity.Visible = false;
+                    btnSelectGuest.Enabled = true;
+                    btnNewGuest.Enabled = true;
+                }
             }
         }
 
         private void LoadReservationInfo(DateTime cin, DateTime cout, short apartments, short kids, short adults)
         {
-            dtpCheckin.Value = cin;
+            dtpCheckin.Value = cin ;
             dtpCheckout.Value = cout;
             nudAdults.Value = adults;
             nudKids.Value = kids;
@@ -680,7 +694,7 @@ namespace HotelsPro2.Forms
                         "VALUES(@guest_id, @reservation_id)", con))
                     {
                         cmd2.Parameters.Add("@guest_id", MySqlDbType.Int32).Value = int.Parse(txtGuestId.Text);
-                        cmd2.Parameters.Add("@reservation_id", MySqlDbType.Int32).Value = reservationApartmentId;
+                        cmd2.Parameters.Add("@reservation_id", MySqlDbType.Int32).Value = Globals.reservationId;
                         cmd2.ExecuteNonQuery();
                     }
                     con.Close();

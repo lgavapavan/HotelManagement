@@ -63,6 +63,7 @@
             this.btnCheckout = new System.Windows.Forms.Button();
             this.btnAddGuest = new System.Windows.Forms.Button();
             this.btnRemoveGuest = new System.Windows.Forms.Button();
+            this.lblReservedApartments = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGuests)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApartments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductsAndServices)).BeginInit();
@@ -308,7 +309,7 @@
             // 
             this.lblAdults.AutoSize = true;
             this.lblAdults.Font = new System.Drawing.Font("Microsoft Tai Le", 16F);
-            this.lblAdults.Location = new System.Drawing.Point(63, 280);
+            this.lblAdults.Location = new System.Drawing.Point(63, 317);
             this.lblAdults.Name = "lblAdults";
             this.lblAdults.Size = new System.Drawing.Size(73, 29);
             this.lblAdults.TabIndex = 78;
@@ -318,7 +319,7 @@
             // 
             this.lblKids.AutoSize = true;
             this.lblKids.Font = new System.Drawing.Font("Microsoft Tai Le", 16F);
-            this.lblKids.Location = new System.Drawing.Point(83, 326);
+            this.lblKids.Location = new System.Drawing.Point(83, 363);
             this.lblKids.Name = "lblKids";
             this.lblKids.Size = new System.Drawing.Size(53, 29);
             this.lblKids.TabIndex = 80;
@@ -407,6 +408,17 @@
             this.btnRemoveGuest.TabIndex = 94;
             this.btnRemoveGuest.Text = "Remove Guest";
             this.btnRemoveGuest.UseVisualStyleBackColor = true;
+            this.btnRemoveGuest.Click += new System.EventHandler(this.btnRemoveGuest_Click);
+            // 
+            // lblReservedApartments
+            // 
+            this.lblReservedApartments.AutoSize = true;
+            this.lblReservedApartments.Font = new System.Drawing.Font("Microsoft Tai Le", 16F);
+            this.lblReservedApartments.Location = new System.Drawing.Point(11, 274);
+            this.lblReservedApartments.Name = "lblReservedApartments";
+            this.lblReservedApartments.Size = new System.Drawing.Size(125, 29);
+            this.lblReservedApartments.TabIndex = 95;
+            this.lblReservedApartments.Text = "Apartments";
             // 
             // ReservationInfoFrm
             // 
@@ -414,6 +426,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1322, 665);
+            this.Controls.Add(this.lblReservedApartments);
             this.Controls.Add(this.btnRemoveGuest);
             this.Controls.Add(this.btnAddGuest);
             this.Controls.Add(this.btnCheckout);
@@ -482,5 +495,6 @@
         private System.Windows.Forms.Button btnCheckout;
         private System.Windows.Forms.Button btnAddGuest;
         private System.Windows.Forms.Button btnRemoveGuest;
+        private System.Windows.Forms.Label lblReservedApartments;
     }
 }

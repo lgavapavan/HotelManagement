@@ -91,6 +91,8 @@ namespace HotelsPro2.Forms
                     con.Close();
                 }
             }
+
+            //this section removes from the list the apartments that are currently selected for this reservation 
             if (Globals.apartments != null)
             {
                 foreach (var item in Globals.apartments)
@@ -125,6 +127,7 @@ namespace HotelsPro2.Forms
             apartment.Value = this.Value;
             ApartmentCategory apartmentCategory = new ApartmentCategory();
             apartmentCategory.Title = row.Cells[2].Value.ToString();
+            apartmentCategory.RoomCapacity = byte.Parse(row.Cells[3].Value.ToString());
             apartment.ApartmentCategory = apartmentCategory;
             Globals.apartments.Add(apartment);
             this.Close();

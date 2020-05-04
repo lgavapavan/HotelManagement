@@ -36,6 +36,7 @@ namespace HotelsPro2.Forms
             dgvGuests.Columns["First Name"].Visible = false;
             dgvGuests.Columns["Last Name"].Visible = false;
             dgvApartments.DataSource = GetApartmentsFromReservation();
+            lblReservedApartments.Text = $"Apartments: {dgvApartments.Rows.Count}";
             dgvApartments.Columns["Reservation Apartment Id"].Visible = false;
             dgvApartments.Columns["Apartment Id"].Visible = false;
             dgvProductsAndServices.DataSource = GetProductsFromReservation();
@@ -203,6 +204,11 @@ namespace HotelsPro2.Forms
             var form = new AddGuestToReservationFrm(this.Reservation.Id);
             form.Show();
             this.Close();
+        }
+
+        private void btnRemoveGuest_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

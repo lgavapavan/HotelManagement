@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewReservationFrm));
             this.lblNewReservation = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
@@ -68,12 +68,13 @@
             this.hotel_adminDataSet = new HotelsPro2.hotel_adminDataSet();
             this.apartmentcategoriesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.apartment_categoriesTableAdapter = new HotelsPro2.hotel_adminDataSetTableAdapters.apartment_categoriesTableAdapter();
-            this.btnChangeDates = new System.Windows.Forms.Button();
+            this.btnChangeReservation = new System.Windows.Forms.Button();
             this.lblDuration = new System.Windows.Forms.Label();
             this.lblAvailability = new System.Windows.Forms.Label();
             this.lblCategoriesToChoose = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtGuestId = new System.Windows.Forms.TextBox();
+            this.lblRoomsCapacity = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudKids)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAdults)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudApartments)).BeginInit();
@@ -302,28 +303,28 @@
             this.dgvCategories.AllowUserToResizeColumns = false;
             this.dgvCategories.AllowUserToResizeRows = false;
             this.dgvCategories.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCategories.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCategories.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCategories.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.category_id,
             this.category_name,
             this.apartments_available,
             this.total_price});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCategories.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCategories.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCategories.Location = new System.Drawing.Point(12, 281);
             this.dgvCategories.MultiSelect = false;
             this.dgvCategories.Name = "dgvCategories";
@@ -355,8 +356,8 @@
             // 
             // total_price
             // 
-            dataGridViewCellStyle7.Format = "C2";
-            this.total_price.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle2.Format = "C2";
+            this.total_price.DefaultCellStyle = dataGridViewCellStyle2;
             this.total_price.HeaderText = "Total Price";
             this.total_price.Name = "total_price";
             this.total_price.ReadOnly = true;
@@ -409,23 +410,23 @@
             this.dgvSelectedApartments.AllowUserToResizeColumns = false;
             this.dgvSelectedApartments.AllowUserToResizeRows = false;
             this.dgvSelectedApartments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSelectedApartments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSelectedApartments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvSelectedApartments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSelectedApartments.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSelectedApartments.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvSelectedApartments.Location = new System.Drawing.Point(635, 281);
             this.dgvSelectedApartments.MultiSelect = false;
             this.dgvSelectedApartments.Name = "dgvSelectedApartments";
@@ -474,16 +475,16 @@
             // 
             this.apartment_categoriesTableAdapter.ClearBeforeFill = true;
             // 
-            // btnChangeDates
+            // btnChangeReservation
             // 
-            this.btnChangeDates.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.btnChangeDates.Location = new System.Drawing.Point(695, 423);
-            this.btnChangeDates.Name = "btnChangeDates";
-            this.btnChangeDates.Size = new System.Drawing.Size(203, 39);
-            this.btnChangeDates.TabIndex = 10;
-            this.btnChangeDates.Text = "Check Other Dates";
-            this.btnChangeDates.UseVisualStyleBackColor = true;
-            this.btnChangeDates.Click += new System.EventHandler(this.btnChangeDates_Click);
+            this.btnChangeReservation.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.btnChangeReservation.Location = new System.Drawing.Point(695, 423);
+            this.btnChangeReservation.Name = "btnChangeReservation";
+            this.btnChangeReservation.Size = new System.Drawing.Size(203, 39);
+            this.btnChangeReservation.TabIndex = 10;
+            this.btnChangeReservation.Text = "Change Reservation";
+            this.btnChangeReservation.UseVisualStyleBackColor = true;
+            this.btnChangeReservation.Click += new System.EventHandler(this.btnChangeReservation_Click);
             // 
             // lblDuration
             // 
@@ -537,18 +538,31 @@
             this.txtGuestId.TabIndex = 89;
             this.txtGuestId.Visible = false;
             // 
+            // lblRoomsCapacity
+            // 
+            this.lblRoomsCapacity.AutoSize = true;
+            this.lblRoomsCapacity.Font = new System.Drawing.Font("Microsoft Tai Le", 9F);
+            this.lblRoomsCapacity.ForeColor = System.Drawing.Color.Red;
+            this.lblRoomsCapacity.Location = new System.Drawing.Point(633, 398);
+            this.lblRoomsCapacity.Name = "lblRoomsCapacity";
+            this.lblRoomsCapacity.Size = new System.Drawing.Size(292, 16);
+            this.lblRoomsCapacity.TabIndex = 90;
+            this.lblRoomsCapacity.Text = "Selected rooms cannot accommodate all these guests";
+            this.lblRoomsCapacity.Visible = false;
+            // 
             // NewReservationFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1163, 655);
+            this.Controls.Add(this.lblRoomsCapacity);
             this.Controls.Add(this.txtGuestId);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblCategoriesToChoose);
             this.Controls.Add(this.lblAvailability);
             this.Controls.Add(this.lblDuration);
-            this.Controls.Add(this.btnChangeDates);
+            this.Controls.Add(this.btnChangeReservation);
             this.Controls.Add(this.picRemove);
             this.Controls.Add(this.picAdd);
             this.Controls.Add(this.lblSelectedApartments);
@@ -631,11 +645,12 @@
         private hotel_adminDataSet hotel_adminDataSet;
         private System.Windows.Forms.BindingSource apartmentcategoriesBindingSource;
         private hotel_adminDataSetTableAdapters.apartment_categoriesTableAdapter apartment_categoriesTableAdapter;
-        private System.Windows.Forms.Button btnChangeDates;
+        private System.Windows.Forms.Button btnChangeReservation;
         private System.Windows.Forms.Label lblDuration;
         private System.Windows.Forms.Label lblAvailability;
         private System.Windows.Forms.Label lblCategoriesToChoose;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtGuestId;
+        private System.Windows.Forms.Label lblRoomsCapacity;
     }
 }

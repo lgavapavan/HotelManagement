@@ -73,7 +73,6 @@ namespace HotelsPro2.Forms
                             }
                         }
 
-                        // SÓ ESTÁ ADICIONANDO O PRIMEIRO APARTAMENTO DA RESERVA. PROBLEMA PODE SER USAR .LOAD
                         using (MySqlCommand cmd2 = new MySqlCommand("ShowApartmentsFromReservationStillAvailable",con))
                         {
                             cmd2.Parameters.Add("_count", MySqlDbType.Int32).Value = count;
