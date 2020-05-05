@@ -78,7 +78,8 @@ namespace HotelsPro2.Forms
         {
             // This makes sure Check-out date will always be after Check-in, and the reservation will 
             // have at least 1 day
-            dtpCheckin.MinDate = DateTime.Now;
+            // If the client wants to enable only future reservations, uncomment next line
+            //dtpCheckin.MinDate = DateTime.Now; 
             dtpCheckout.MinDate = dtpCheckin.Value.AddDays(1);
         }
 
@@ -462,6 +463,7 @@ namespace HotelsPro2.Forms
                 }
                 dgvSelectedApartments.Rows.RemoveAt(selectedrowindex);
                 lblCategoriesToChoose.Text = (int.Parse(lblCategoriesToChoose.Text) + 1).ToString();
+                lblRoomsCapacity.Visible = false;
                 btnSelectGuest.Enabled = false;
                 btnNewGuest.Enabled = false;
             }

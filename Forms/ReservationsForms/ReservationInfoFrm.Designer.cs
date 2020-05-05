@@ -64,6 +64,7 @@
             this.btnAddGuest = new System.Windows.Forms.Button();
             this.btnRemoveGuest = new System.Windows.Forms.Button();
             this.lblReservedApartments = new System.Windows.Forms.Label();
+            this.btnDeleteReservation = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGuests)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApartments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductsAndServices)).BeginInit();
@@ -362,7 +363,7 @@
             this.btnHousekeeper.Name = "btnHousekeeper";
             this.btnHousekeeper.Size = new System.Drawing.Size(195, 34);
             this.btnHousekeeper.TabIndex = 90;
-            this.btnHousekeeper.Text = "View Housekeeper";
+            this.btnHousekeeper.Text = "Housekeeping";
             this.btnHousekeeper.UseVisualStyleBackColor = true;
             // 
             // btnCheckin
@@ -420,12 +421,24 @@
             this.lblReservedApartments.TabIndex = 95;
             this.lblReservedApartments.Text = "Apartments";
             // 
+            // btnDeleteReservation
+            // 
+            this.btnDeleteReservation.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.btnDeleteReservation.Location = new System.Drawing.Point(1057, 344);
+            this.btnDeleteReservation.Name = "btnDeleteReservation";
+            this.btnDeleteReservation.Size = new System.Drawing.Size(195, 34);
+            this.btnDeleteReservation.TabIndex = 96;
+            this.btnDeleteReservation.Text = "Delete Reservation";
+            this.btnDeleteReservation.UseVisualStyleBackColor = true;
+            this.btnDeleteReservation.Click += new System.EventHandler(this.btnDeleteReservation_Click);
+            // 
             // ReservationInfoFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1322, 665);
+            this.ClientSize = new System.Drawing.Size(1322, 669);
+            this.Controls.Add(this.btnDeleteReservation);
             this.Controls.Add(this.lblReservedApartments);
             this.Controls.Add(this.btnRemoveGuest);
             this.Controls.Add(this.btnAddGuest);
@@ -496,5 +509,6 @@
         private System.Windows.Forms.Button btnAddGuest;
         private System.Windows.Forms.Button btnRemoveGuest;
         private System.Windows.Forms.Label lblReservedApartments;
+        private System.Windows.Forms.Button btnDeleteReservation;
     }
 }

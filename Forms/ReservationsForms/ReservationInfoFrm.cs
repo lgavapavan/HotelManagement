@@ -45,7 +45,16 @@ namespace HotelsPro2.Forms
             {
                 btnAddGuest.Enabled = true;
             }
-            
+
+            if (this.ReservationApartmentId != null)
+                this.ReservationApartmentId.Clear();
+            List<int> a = new List<int>();
+            for (int i = 0; i <= dgvApartments.Rows.Count - 1; i++)
+            {
+                a.Add(int.Parse(dgvApartments.Rows[i].Cells["Reservation Apartment Id"].Value.ToString()));
+            }
+            this.ReservationApartmentId = a;
+
 
         }
 
@@ -187,14 +196,6 @@ namespace HotelsPro2.Forms
 
         private void btnCheckin_Click(object sender, EventArgs e)
         {
-            if (this.ReservationApartmentId != null)
-                this.ReservationApartmentId.Clear();
-            List<int> a = new List<int>();
-            for (int i = 0; i <= dgvApartments.Rows.Count-1; i++)
-            {
-                a.Add(int.Parse(dgvApartments.Rows[i].Cells["Reservation Apartment Id"].Value.ToString()));
-            }
-            this.ReservationApartmentId = a;
             var form = new CheckinFrm(this.Reservation.Id, this.ReservationApartmentId);
             form.Show();
         }
@@ -209,6 +210,72 @@ namespace HotelsPro2.Forms
         private void btnRemoveGuest_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnDeleteReservation_Click(object sender, EventArgs e)
+        {
+            DialogResult dialog = MessageBox.Show($"Are you sure you would like to delete this reservation?", "Delete Reservation", MessageBoxButtons.YesNo);
+            if (dialog == DialogResult.Yes)
+            {
+                MySqlConnection con = new MySqlConnection(Globals.connString);
+
+                for (int i = 0; i <= this.ReservationApartmentId.Count-1; i++)
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("DeleteFromConsumedProducts", con))
+                    {
+                        con.Open();
+                        cmd.Parameters.Add("_reservationApartmentId", MySqlDbType.Int32).Value = this.ReservationApartmentId[i];
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+
+                    using (MySqlCommand cmd = new MySqlCommand("DeleteFromGuestsOnAReservation", con))
+                    {
+                        con.Open();
+                        cmd.Parameters.Add("_reservationApartmentId", MySqlDbType.Int32).Value = this.ReservationApartmentId[i];
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+
+                    using (MySqlCommand cmd = new MySqlCommand("DeleteFromReservationApartment", con))
+                    {
+                        con.Open();
+                        cmd.Parameters.Add("_reservationApartmentId", MySqlDbType.Int32).Value = this.ReservationApartmentId[i];
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+
+
+                using (MySqlCommand cmd = new MySqlCommand("DeleteFromReservationGuest", con))
+                {
+                    con.Open();
+                    cmd.Parameters.Add("_reservationId", MySqlDbType.Int32).Value = this.Reservation.Id;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+
+
+                using (MySqlCommand cmd = new MySqlCommand("DeleteFromReservations", con))
+                {
+                    con.Open();
+                    cmd.Parameters.Add("_reservationId", MySqlDbType.Int32).Value = this.Reservation.Id;
+                    cmd.CommandType = CommandType.StoredProcedure;                    
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+
+                MessageBox.Show("Reservation deleted successfully");
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Ok, aborting deletion");
+            }
         }
     }
 }
